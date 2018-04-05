@@ -4,19 +4,21 @@ from src.plot import plot_many
 
 # Data parameters
 data_type = "wave"
-w_list = [0.01 * i for i in range(10)]
-w_counts = [20 for i in range(10)]
+w_list = [0.02 * i for i in range(5)]
+n_obs = 1000
 interval = [0, 100]
 split = 100
 st_dev = 0.1
+coefficients_range = [-2, 2]
+sparsity = 0.7
 
 # Learning parameters
-it = 10
-lam = 0.1
+it = 100
+lam = 0.001
 dict_size = 5
 
 # Generate data
-data = generate(data_type, w_list, w_counts, interval, split, st_dev)
+data = generate(data_type, w_list, n_obs, interval, split, st_dev, coefficients_range, sparsity)
 
 # Visualize data
 x = [i for i in range(split)]

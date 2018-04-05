@@ -25,12 +25,13 @@ class OnlineDictionaryLearning:
     @staticmethod
     def compute_dic(a, b, d, dict_size):
 
-        converged = False
+        # We run only one iteration for the optimization over D
+        # converged = False
 
-        while not converged :
-            for j in range(dict_size) :
-                u_j = (b[:, j] - np.matmul(d, a[:, j])) / a[j, j] + d[:, j]
-                d[:, j] = u_j / max([1, np.linalg.norm(u_j)])
+        # while not converged :
+        for j in range(dict_size) :
+            u_j = (b[:, j] - np.matmul(d, a[:, j])) / a[j, j] + d[:, j]
+            d[:, j] = u_j / max([1, np.linalg.norm(u_j)])
 
         return d
 
@@ -55,7 +56,7 @@ class OnlineDictionaryLearning:
             b_prev = b_curr
             d_prev = d_curr
 
-        return d_curr
+        return d_curr.T
 
     def initialize_dic(self, dict_size):
         return np.random.rand(self.dim_obs, dict_size) * 2 - 1
@@ -64,7 +65,7 @@ class OnlineDictionaryLearning:
         data_gen = self.sample(self.data)
         return sum([self.loss_obs(x= next(data_gen), alpha=alpha, d=d)
                     for i in range(self.n_obs)]) \
-               + lam * np.linalg.norm(alpha, ord=1)
+            + lam * np.linalg.norm(alpha, ord=1)
 
     @staticmethod
     def loss_obs(x, alpha, d):

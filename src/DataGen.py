@@ -38,7 +38,7 @@ def merge_signals(base_signals, coefficients_list):
 
 
 def generate_coefficients(dict_size, sparsity, coefficients_range):
-    bernoulli_mask = np.random.binomial(1, sparsity, dict_size)
+    bernoulli_mask = np.random.binomial(1, 1 - sparsity, dict_size)
     coefficients_list = [uniform(coefficients_range[0], coefficients_range[1])
                          for _ in range(dict_size)]
     return [bernoulli_mask[i] * coefficients_list[i] for i in range(dict_size)]
